@@ -9,6 +9,6 @@ The first base model was a ResNet that extracts 1000 features from the images, t
 We used VGG16 as a base model for all 3 of our VGG models. For our first VGG model, we only added 2D global average pooling and a single softmax-activated dense linear layer. For our second VGG model, we added two relu-activated 2D convolution layers, followed by 2D global average pooling. Then, after a flatten layer, we passed the outputs through 3 dense blocks. The dense block architecture consisted of a relu-activated dense layer followed by batch normalization and a dropout layer. The output was then passed through a final dense layer, activated with softmax. For our third VGG model, we used a convolution block consisting of two separable convolution layers with 32 output filters, followed by batch normalization and 2D Global Average Pooling. The output was then passed through 3 dense blocks and a final dense layer.
 
 
-Here are the links to the [Project Writeup](https://docs.google.com/document/d/1nTk9OHvCTI8rGrsVXXEZt9qAQBM3ojPsbBitPrDigeY/edit?usp=sharing)
-and [Poster](https://docs.google.com/presentation/d/1rrZeO-qu_l061rChZP2uomHyqzWPMe-TeSBjxD7tzS4/edit?usp=sharing).
+Here is the link to the [Project Writeup](https://docs.google.com/document/d/1nTk9OHvCTI8rGrsVXXEZt9qAQBM3ojPsbBitPrDigeY/edit?usp=sharing).
 
+(/docs/example.png)
