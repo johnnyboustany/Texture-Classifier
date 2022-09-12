@@ -11,4 +11,4 @@ We used VGG16 as a base model for all 3 of our VGG models. For our first VGG mod
 
 Here is the link to the [Project Writeup](https://docs.google.com/document/d/1nTk9OHvCTI8rGrsVXXEZt9qAQBM3ojPsbBitPrDigeY/edit?usp=sharing).
 
-(/docs/example.png)
+![A poster summarizing the project.](/docs/poster.png)
