@@ -39,11 +39,13 @@ In order to evaluate the effectiveness of the models, we examined both precision
 
 <p align="center">
     <img src="./assets/tabletexture.png" height=200 alt="">
+    <br>
     above: shows the average accuracy values for the models.
 </p>
 
 <p align="center">
     <img src="./assets/graphtexture.png" height=400 alt="">
+    <br>
     above: comparing classifications of the 47 Textures by all models.
 </p>
 
