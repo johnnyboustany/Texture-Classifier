@@ -11,10 +11,7 @@ Alongside two students, I built two base deep learning models for my Spring 2022
 * [General Info](#general-info)
 * [Features](#features)
 * [Results](#results)
-* [Testing](#testing)
-* [Usage Instructions](#usage-instructions)
 * [Project Status](#project-status)
-* [Conclusion](#conclusion)
 * [Contributions](#contributions)
 <!-- * [License](#license) -->
 
@@ -42,10 +39,12 @@ In order to evaluate the effectiveness of the models, we examined both precision
 
 <p align="center">
     <img src="./assets/tabletexture.png" height=200 alt="">
+    above: shows the average accuracy values for the models.
 </p>
 
 <p align="center">
-    <img src="./assets/graphtexture.png" height=200 alt="">
+    <img src="./assets/graphtexture.png" height=400 alt="">
+    above: comparing classifications of the 47 Textures by all models.
 </p>
 
 ## Project Status
