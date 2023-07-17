@@ -43,6 +43,8 @@ In order to evaluate the effectiveness of the models, we examined both precision
     above: shows the average accuracy values for the models.
 </p>
 
+<br>
+
 <p align="center">
     <img src="./assets/graphtexture.png" height=400 alt="">
     <br>
