@@ -56,10 +56,11 @@ Project is: Complete (as of May 2022)
 
 ## Contributions
 
- I specifically worked on the 3 VGG models.
- 
- My group members: Dhiraj Khanal, Rakan Mosa O Alomran
+I specifically worked on the 3 VGG models.
 
- Here is the link to the [Project Writeup](https://docs.google.com/document/d/1nTk9OHvCTI8rGrsVXXEZt9qAQBM3ojPsbBitPrDigeY/edit?usp=sharing).
+My group members: Dhiraj Khanal, Rakan Mosa O Alomran
 
- ![A poster summarizing the project.](/docs/poster.png)
+Here is the link to the [Project Writeup](https://docs.google.com/document/d/1nTk9OHvCTI8rGrsVXXEZt9qAQBM3ojPsbBitPrDigeY/edit?usp=sharing).
+
+A poster summarizing the project:
+![](/docs/poster.png)
