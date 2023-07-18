@@ -57,7 +57,7 @@ def get_files():
 def dtdTrain(n):
     dt=Dtd2()
     dm = tfds.download.DownloadManager(download_dir='DLFinal')
-    #print(labels)
+
     datapath='DLFinal\\extracted\\TAR_GZ.robot.ox.ac.uk_vgg_dtd_downl_dtd-r1.0.15ChVpSpJUKO1lhKDRgKqJTkUdVyVsM_56tbQc5X44gU.tar.gz'
     images, labels, filenames=[],[],[]
     for i in range(1,n+1):
@@ -73,7 +73,7 @@ def dtdTrain(n):
 def dtdTest(n):
     dt=Dtd2()
     dm = tfds.download.DownloadManager(download_dir='DLFinal')
-    #print(labels)
+
     datapath='DLFinal\\extracted\\TAR_GZ.robot.ox.ac.uk_vgg_dtd_downl_dtd-r1.0.15ChVpSpJUKO1lhKDRgKqJTkUdVyVsM_56tbQc5X44gU.tar.gz'
     images, labels, filenames=[],[],[]
     for i in range(1,n+1):
@@ -90,7 +90,7 @@ def dtdTest(n):
 def dtdValidation(n):
     dt=Dtd2()
     dm = tfds.download.DownloadManager(download_dir='DLFinal')
-    #print(labels)
+
     datapath='DLFinal\\extracted\\TAR_GZ.robot.ox.ac.uk_vgg_dtd_downl_dtd-r1.0.15ChVpSpJUKO1lhKDRgKqJTkUdVyVsM_56tbQc5X44gU.tar.gz'
     images, labels, filenames=[],[],[]
     for i in range(1,n+1):

@@ -50,26 +50,6 @@ def trainTest():
                                                          input_shape=(*IMAGE_SIZE, 3))
 
     base_model.trainable = False
-    '''
-    conv_kwargs = {
-        "padding"             : "SAME",
-        "activation"          : tf.keras.layers.LeakyReLU(alpha=0.2),
-        "kernel_initializer"  : tf.random_normal_initializer(stddev=.1)
-    }
-
-    model = tf.keras.Sequential([
-        base_model,tf.keras.layers.Conv2D(100, 3, strides=(2, 2), **conv_kwargs),
-        tf.keras.layers.Conv2D(100, 3, strides=(2, 2), **conv_kwargs),
-        tf.keras.layers.GlobalAveragePooling2D(),
-        tf.keras.layers.Dense(47, activation='softmax')
-    ])
-
-    model = tf.keras.Sequential([
-        base_model,
-        tf.keras.layers.GlobalAveragePooling2D(),
-        tf.keras.layers.Dense(NUM_CLASSES, activation='softmax')
-    ])
-    '''
     model = tf.keras.Sequential([
         base_model,
         tf.keras.layers.BatchNormalization(renorm=True),

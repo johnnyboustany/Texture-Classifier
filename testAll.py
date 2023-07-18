@@ -19,40 +19,24 @@ class Model(tf.keras.Model):
 
         super(Model, self).__init__()
 
-        # TODO: initialize embedding_size, batch_size, and any other hyperparameters
-
+        # initialize embedding_size, batch_size, and any other hyperparameters
         self.vocab_size = vocab_size
         self.window_size = 20
         self.embedding_size = 30  # TODO
         self.batch_size = 200  # TODO
-
-        # TODO: initialize embeddings and forward pass weights (weights, biases)
         self.E = tf.Variable(tf.random.normal((vocab_size, self.embedding_size), stddev=.1,dtype=np.float32))  ## TODO
         self.LSTM=tf.keras.layers.LSTM(100,return_sequences=True,return_state=True)
         self.dense=tf.keras.layers.Dense(self.vocab_size,activation='softmax')
-        # Note: You can now use tf.keras.layers!
-        # - use tf.keras.layers.Dense for feed forward layers
-        # - and use tf.keras.layers.GRU or tf.keras.layers.LSTM for your RNN
-
+  
     def call(self, inputs, initial_state):
         """
-        - You must use an embedding layer as the first layer of your network
-        (i.e. tf.nn.embedding_lookup)
-        - You must use an LSTM or GRU as the next layer.
-
         :param inputs: word ids of shape (batch_size, window_size)
         :param initial_state: 2-d array of shape (batch_size, rnn_size) as a tensor
         :return: the batch element probabilities as a tensor, a final_state
-        (NOTE 1: If you use an LSTM, the final_state will be the last two RNN outputs,
-        NOTE 2: We only need to use the initial state during generation)
-        using LSTM and only the probabilites as a tensor and a final_state as a tensor when using GRU
         """
         out,h_t,s_t=self.LSTM(tf.nn.embedding_lookup(self.E,inputs),initial_state=initial_state)
         probabilities=self.dense(out)
         return probabilities,(h_t,s_t)
-        # TODO: Fill in
-
-        return None, None
 
     def loss(self, probabilities, labels):
         """
@@ -71,9 +55,7 @@ class Model(tf.keras.Model):
 
 def train(model, train_inputs, train_labels):
     """
-    Runs through one epoch - all training examples (remember to batch!)
-    Here you will also want to reshape your inputs and labels so that they match
-    the inputs and labels shapes passed in the call and loss functions respectively.
+    Runs through one epoch - all training examples 
 
     :param model: the initilized model to use for forward and backward pass
     :param train_inputs: train inputs (all inputs for training) of shape (num_inputs,) reshape to be batch_size, window_size
@@ -102,27 +84,12 @@ def train(model, train_inputs, train_labels):
 
 def test(model, test_inputs, test_labels):
     """
-    Runs through one epoch - all testing examples (remember to batch!)
-    Here you will also want to reshape your inputs and labels so that they match
-    the inputs and labels shapes passed in the call and loss functions respectively.
+    Runs through one epoch - all testing examples 
 
     :param model: the trained model to use for prediction
     :param test_inputs: train inputs (all inputs for testing) of shape (num_inputs,)
     :param test_labels: train labels (all labels for testing) of shape (num_labels,)
     :returns: perplexity of the test set
-
-    # TODO: Fill in
-    # NOTE: Ensure a correct perplexity formula (different from raw loss)
-    trainInputs=test_inputs[:-(len(test_inputs)%model.window_size)]
-    trainLabels=test_labels[:-(len(test_labels)% model.window_size)]
-    print(np.shape(trainLabels))
-    print(np.shape(trainInputs))
-    trainInputs=np.reshape(trainInputs,(-1,model.window_size))
-    trainLabels=np.reshape(trainLabels,(-1,model.window_size))
-    print(np.shape(trainLabels))
-    print(np.shape(trainInputs))
-    acc=0
-    a=int(len(trainInputs))
     """
 
     trainInputs=test_inputs[:-(len(test_inputs)%model.window_size)]
@@ -147,8 +114,6 @@ def generate_sentence(word1, length, vocab, model, sample_n=10):
     :return: None
     """
 
-    # NOTE: Feel free to play around with different sample_n values
-
     reverse_vocab = {idx: word for word, idx in vocab.items()}
     previous_state = None
 
@@ -171,35 +136,15 @@ def generate_sentence(word1, length, vocab, model, sample_n=10):
 
 
 def main():
-    # TODO: Pre-process and vectorize the data
-    # HINT: Please note that you are predicting the next word at each timestep,
-    # so you want to remove the last element from train_x and test_x.
-    # You also need to drop the first element from train_y and test_y.
-    # If you don't do this, you will see impossibly small perplexities.
+    # Pre-process and vectorize the data
     x,y,z = get_data("train.txt","test.txt")
     trainData=x[0:len(x)-1]
     trainLab=x[1:len(x)]
     testData=y[0:len(y)-1]
     testLab=y[1:len(y)]
-    """
-
-    trainData=x[0:int(len(x)/146)]
-    trainLab=x[1:int(len(x)/146)]
-    testData=y[0:int(len(y)/14)]
-    testLab=y[1:int(len(y)/14)]
-        """
-
     model=Model(len(z))
     train(model, trainData, trainLab)
     print(test(model,testData,testLab))
-    # TODO: Separate your train and test data into inputs and labels
-    # TODO: initialize model and tensorflow variables
-    # TODO: Set-up the training step
-    # TODO: Set up the testing steps
-
-    # Print out perplexity
-
-    # BONUS: Try printing out various sentences with different start words and sample_n parameters
     pass
 
 

@@ -7,8 +7,6 @@ from keras.models import load_model
 BATCH_SIZE = 32
 IMAGE_SIZE = [224, 224]
 NUM_CLASSES = 47
-
-
     
 def train():
     train_dataset, val_dataset, test_dataset = get_files()

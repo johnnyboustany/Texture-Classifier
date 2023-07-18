@@ -8,7 +8,6 @@ BATCH_SIZE = 32
 IMAGE_SIZE = [224, 224]
 NUM_CLASSES = 47
 
-
 def trainTest():
     x_val,y_val,z_val=dtdValidation()
     print("15")
@@ -42,13 +41,7 @@ def trainTest():
         tf.keras.layers.GlobalAveragePooling2D(),
         tf.keras.layers.Dense(47, activation='softmax')
     ])
-    '''
-    model = tf.keras.Sequential([
-        base_model,
-        tf.keras.layers.GlobalAveragePooling2D(),
-        tf.keras.layers.Dense(NUM_CLASSES, activation='softmax')
-    ])
-    '''
+
     model.compile(optimizer='adam',
                   loss='categorical_crossentropy',
                   metrics='accuracy')

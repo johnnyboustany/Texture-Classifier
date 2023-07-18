@@ -1,7 +1,6 @@
 import numpy as np
 import tensorflow as tf
 import tensorflow_hub as hub
-
 from torchvision import models, transforms
 
 class ResNet(tf.keras.applications.resnet.ResNet101(
@@ -28,9 +27,6 @@ class ResNet(tf.keras.applications.resnet.ResNet101(
         f2 = self.layer2(f1)
         f3 = self.layer3(f2)
         f4 = self.layer4(f3)
-        # f4_ = self.avgpool(f4)
-        # f4_ = torch.flatten(f4_, 1)
-        # pred = self.fc(f4_)
 
         return [f0, f1, f2, f3, f4]
 

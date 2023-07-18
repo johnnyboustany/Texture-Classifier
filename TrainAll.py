@@ -11,17 +11,6 @@ class VAE(tf.keras.Model):
         self.input_size = input_size  # H*W
         self.latent_size = latent_size  # Z
         self.hidden_dim = 400  # H_d
-
-        """
-        self.flat=Sequential()
-        self.flat.add(Flatten())
-        self.encoder = Sequential()
-        self.encoder.add(Dense(self.hidden_dim, activation='relu'))
-        self.encoder.add(Dense(self.hidden_dim, activation='relu'))
-        self.encoder.add(Dense(self.hidden_dim, activation='relu'))
-
-        self.encoder.add(tf.keras.layers.Dense(self.latent_size, activation='linear'))
-                """
         self.encoder = Sequential()
         self.encoder.add(Conv2D(filters=16, kernel_size=3, activation='relu'))
         self.encoder.add(Conv2D(16, 3, activation='relu'))
@@ -36,18 +25,6 @@ class VAE(tf.keras.Model):
         self.encoder.add(Dropout(rate=0.25))
         self.encoder.add(Dense(47, activation='softmax'))  # should we use a softmax here??
 
-        """
-        self.decoder = Sequential()
-        self.decoder.add(tf.keras.Input(shape=(self.latent_size+self.num_classes)))
-        self.decoder.add(Dense(self.hidden_dim, activation='relu'))
-        self.decoder.add(Dense(self.hidden_dim, activation='relu'))
-        self.decoder.add(Dense(self.hidden_dim, activation='relu'))
-        self.decoder.add(Dense(self.input_size, activation='sigmoid'))
-        self.decoder.add(tf.keras.layers.Reshape((47)))
-        """
-
-        #self.decoder.add(tf.keras.layers.Reshape((1,300,400)))
-
     def call(self, x):
         return self.encoder(x)
 
@@ -58,17 +35,6 @@ class CVAE(tf.keras.Model):
         self.latent_size = latent_size # Z
         self.num_classes = num_classes # C
         self.hidden_dim = 400 # H_d
-
-        """
-        self.flat=Sequential()
-        self.flat.add(Flatten())
-        self.encoder = Sequential()
-        self.encoder.add(Dense(self.hidden_dim, activation='relu'))
-        self.encoder.add(Dense(self.hidden_dim, activation='relu'))
-        self.encoder.add(Dense(self.hidden_dim, activation='relu'))
-
-        self.encoder.add(tf.keras.layers.Dense(self.latent_size, activation='linear'))
-                """
         self.encoder = Sequential()
         self.encoder.add(Flatten())
         self.encoder.add(Conv2D(filters=16, kernel_size=3, activation='relu'))
@@ -85,33 +51,16 @@ class CVAE(tf.keras.Model):
         self.encoder.add(Dense(25, activation='softmax'))  # should we use a softmax here??
 
 
-        """
-        self.decoder = Sequential()
-        self.decoder.add(tf.keras.Input(shape=(self.latent_size+self.num_classes)))
-        self.decoder.add(Dense(self.hidden_dim, activation='relu'))
-        self.decoder.add(Dense(self.hidden_dim, activation='relu'))
-        self.decoder.add(Dense(self.hidden_dim, activation='relu'))
-        self.decoder.add(Dense(self.input_size, activation='sigmoid'))
-        self.decoder.add(tf.keras.layers.Reshape((47)))
-        """
-
     def call(self, x, c):
         xf=self.flat(x)
         enc=tf.concat((xf,c),axis=1)
         probs=self.encoder(enc)
-        """
-        cnnInput=self.linear(out)
-        z=CNN(cnnInput)
-        z=tf.cast(z,dtype=tf.float32)
-        dec=tf.concat((z,c),axis=1)
-        probs=self.decoder(dec)
-        """
+
         return probs
 
 
-def CNN(x):# this part will be sourced out to the CNNs
-#coppied some of this model from this link https://gist.github.com/JulieProst/8000610500a67fda4b76e07efe585552
-#make sure to note this in the final handin
+def CNN(x):
+
     model = Sequential()
     model.add(Conv2D(filters=16,kernel_size=3,activation='relu'))
     model.add(Conv2D(16, 3, activation='relu'))
@@ -124,7 +73,7 @@ def CNN(x):# this part will be sourced out to the CNNs
     model.add(Flatten())
     model.add(Dense(units=128, activation='relu'))
     model.add(Dropout(rate=0.25))
-    model.add(Dense(25, activation='softmax')) #should we use a softmax here??
+    model.add(Dense(25, activation='softmax'))
     return model(x)
 
 def loss(probabilities,labels):
@@ -138,12 +87,9 @@ def train(model, train_inputs, train_labels):
     trainLabels=train_labels
 
     for i in range(int(len(trainLabels))):
-    #for i in range(int(len(trainLabels) / model.batch_size)):
         with tf.GradientTape() as tape:
             trainInputs[i]=tf.reshape(trainInputs[i],(1,300,400,3))
-            #trainOutput1 = (model.call(trainInputs[i*model.batch_size:(i+1)*model.batch_size]))
             trainOutput1 = (model.call(trainInputs[i]))
-            #Loss = model.loss(trainOutput1,trainLabels[i*model.batch_size:(i+1)*model.batch_size])
             Loss = loss(trainOutput1,trainLabels[i])
             if(i%100==0):
                 print(i,Loss)
@@ -152,10 +98,8 @@ def train(model, train_inputs, train_labels):
 
 def test(model, test_inputs, test_labels):
     acc=0
-    #a=int(len(test_labels) / model.batch_size)
     a=int(len(test_labels))
     for i in range(a):
-        #correct_predictions = tf.equal(tf.argmax(model.call(test_inputs[i*model.batch_size:(i+1)*model.batch_size]), 1), tf.argmax(test_labels[i*model.batch_size:(i+1)*model.batch_size], 1))/a
         test_inputs[i] = tf.reshape(test_inputs[i], (1, 300, 400, 3))
         a1=int(tf.argmax(model.call(test_inputs[i]), 1).numpy()[0])
         a2=int(test_labels[i].numpy())
@@ -188,8 +132,6 @@ def testFunction():
     # # building the input vector from the 32x32 pixels
     X_train = tf.reshape(X_train,(X_train.shape[0], 224, 224, 3))
     X_test = tf.reshape(X_test,(X_test.shape[0], 224, 224, 3))
-    #X_train = X_train.astype('float32')
-    #X_test = X_test.astype('float32')
 
     # normalizing the data to help with the training
     X_train /= 255
@@ -203,8 +145,7 @@ def testFunction():
     print("Shape after one-hot encoding: ", Y_train.shape)
 
     # building a linear stack of layers with the sequential model
-    #model=VGGModel()
-    #model(tf.keras.Input(shape=(224,224,3))
+
     out=tf.keras.applications.vgg16.VGG16(X_train,classes=47)
 
     model = Sequential()
@@ -365,50 +306,6 @@ def trainTest2():
 
     print(model.evaluate(test_dataset))
 
-    """
-    
-    base_model = tf.keras.applications.ResNet101(weights='imagenet', include_top=False, input_shape = (224, 224, 3))
-    for layer in base_model.layers:
-        layer.trainable = False
-
-    x = layers.Flatten()(base_model.output)
-    x = layers.Dense(512, activation='relu')(x)
-    predictions = layers.Dense(47, activation = 'softmax')(x)
-
-    head_model = Model(inputs=base_model.input, outputs=predictions)
-    head_model.compile(optimizer='adam', loss=tf.keras.losses.sparse_categorical_crossentropy, metrics=['accuracy'])
-
-    train_dataset = tf.data.Dataset.from_tensor_slices((x_train, y_train))
-    test_dataset = tf.data.Dataset.from_tensor_slices((x_test, y_test))
-    val_dataset = tf.data.Dataset.from_tensor_slices((x_val, y_val))
-
-
-    train_dataset = train_dataset.shuffle(buffer_size=64).batch(64)
-    test_dataset = test_dataset.batch(64)
-    val_dataset = val_dataset.batch(64)
-
-
-
-    history = head_model.fit(train_dataset, batch_size=64, epochs=5, validation_data=val_dataset)
-
-
-    def plot():
-        fig, axs = plt.subplots(2, 1, figsize=(15,15))
-        axs[0].plot(history.history['loss'])
-        axs[0].plot(history.history['val_loss'])
-        axs[0].title.set_text('Training Loss vs Validation Loss')
-        axs[0].set_xlabel('Epochs')
-        axs[0].set_ylabel('Loss')
-        axs[0].legend(['Train','Val'])
-        axs[1].plot(history.history['accuracy'])
-        axs[1].plot(history.history['val_accuracy'])
-        axs[1].title.set_text('Training Accuracy vs Validation Accuracy')
-        axs[1].set_xlabel('Epochs')
-        axs[1].set_ylabel('Accuracy')
-        axs[1].legend(['Train', 'Val'])
-    plot()
-    print(head_model.evaluate(test_dataset))
-"""
 def trainTest3():
 
     train_dataset,val_dataset,test_dataset=get_files()
