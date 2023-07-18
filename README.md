@@ -63,4 +63,4 @@ My group members: Dhiraj Khanal, Rakan Mosa O Alomran
 Here is the link to the [Project Writeup](https://docs.google.com/document/d/1nTk9OHvCTI8rGrsVXXEZt9qAQBM3ojPsbBitPrDigeY/edit?usp=sharing).
 
 A poster summarizing the project:
-![](/docs/poster.png)
+![](/assets/poster.png)
