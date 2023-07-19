@@ -52,7 +52,7 @@ In order to evaluate the effectiveness of the models, we examined both precision
 </p>
 
 ## Project Status
-Project is: Complete (as of April 2022)
+Project is: Complete (as of Spring 2022)
 
 ## Contributions
 
