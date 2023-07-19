@@ -56,7 +56,7 @@ Project is: Complete (as of May 2022)
 
 ## Contributions
 
-I specifically worked on the 3 VGG models.
+I specifically worked on developing the 3 VGG models, plotting any results related to them, and the testing of all the models.
 
 My group members: Dhiraj Khanal, Rakan Mosa O Alomran
 
